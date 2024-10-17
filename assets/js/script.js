@@ -74,6 +74,34 @@ const currentPath = window.location.pathname;
 if (currentPath == '/users.html') {
   document.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', function () {
+      
+      const card = this.closest('.card');
+      const fullName = card.querySelector('h3').innerText.split(": ")[1];
+      const typeDocument = card.querySelector('p:nth-child(2)').innerText.split(": ")[1];
+      const numberDocument = card.querySelector('p:nth-child(3)').innerText.split(": ")[1];
+      const fileId = card.querySelector('p:nth-child(4)').innerText.split(": ")[1];
+      const role = card.querySelector('p:nth-child(5)').innerText.split(": ")[1];
+      const status = card.querySelector('p:nth-child(6)').innerText.split(": ")[1];
+      const id = card.querySelector('p:nth-child(7)').innerText.split(": ")[1];
+
+      document.getElementById('editFullName').value = fullName;
+      document.getElementById('editDocumentType').value = typeDocument;
+      document.getElementById('editDocumentNumber').value = numberDocument;
+      document.getElementById('editFileId').value = fileId;
+      document.getElementById('editRole').value = role;
+      document.getElementById('editStatus').value = status;
+      document.getElementById('editId').value = id;
+
+      document.getElementById('modal-edit').style.display = 'flex';
+
+    });
+  });
+}
+
+if (currentPath == '/dashboard.html') {
+  document.querySelectorAll('.edit-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      console.log('Entro hasta aquí ');
       const card = this.closest('.card');
       const fullName = card.querySelector('h3').innerText.split(": ")[1];
       const typeDocument = card.querySelector('p:nth-child(2)').innerText.split(": ")[1];
@@ -94,3 +122,20 @@ if (currentPath == '/users.html') {
     });
   });
 }
+
+function checkAuth() { 
+  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+    const [name, value]= cookie.split('=').map(c=> c.trim());
+    acc[name]= value;
+    return acc;
+  },{})
+
+  if(cookies.isLoggedIn != 'true'){
+    window.location.href = '/login';
+  }
+ }
+
+ document.getElementById('logout-btn').addEventListener('click',function() {
+  document.cookie = "isLoggedIn=; path=/; max-age=0"
+  window.location.href ="/login.html";
+ })

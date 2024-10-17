@@ -12,6 +12,8 @@ $('#formLogin').on('submit', function (event) {
             // Limpiar formulario de registro
 
             if (data.result.user.length > 0) {
+                document.cookie = "isLoggedIn=true; path=/; max-age=3600";
+                document.cookie = " userName="+data.result.user[0].fullName+"; path=/; max-age=3600"
                 // SweetAlert2
                 const Toast = Swal.mixin({
                     toast: true,
@@ -29,7 +31,7 @@ $('#formLogin').on('submit', function (event) {
                     title: data.result.message
                 });
 
-                window.location.href = 'dashboard.html';
+                window.location.href = 'users.html';
             } else {
                 // SweetAlert2
                 const Toast = Swal.mixin({
